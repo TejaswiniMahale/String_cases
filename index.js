@@ -52,10 +52,43 @@ var randomCapitalize = function(givenString,base = 3){
     }).join(''); 
     return givenString; 
 }
+var countWords = function(givenString){
+    // let givenString = this;
+    let words = givenString.split(" ");
+    return words.length;
+}
+
+
+var maskEmail = function(givenString,element = "*"){
+    // let givenString = this
+    const emailParts = givenString.split('@')
+    if(emailParts.length !== 2){
+        throw new Error("Invalid Email")
+    }
+    const [name,domain] = emailParts
+    const [provider, ending] = domain.split(".")
+
+    const maskName = name.charAt(0) + element.repeat(name.length-1)
+    const maskDomain = domain.charAt(0) + element.repeat(provider.length-1)
+    
+    const finalString = maskName + "@" + maskDomain + "." + ending
+    return finalString
+}
+
+var readingTime = function(givenString,wordMin = 100){
+    // let givenString = this
+    let words = givenString.countWords()
+    const wordPerMin = wordMin
+    const minute = words/wordPerMin
+    return minute
+}
 
 export {randomCapitalize,
     allLower,
     allCapitalize,
     firstWordCapitalize,
     firstLetterCapitalize,
-    allFirstLetterCapitalize}
+    allFirstLetterCapitalize,
+    countWords,
+    maskEmail,
+    readingTime}
